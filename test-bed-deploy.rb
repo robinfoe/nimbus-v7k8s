@@ -4,7 +4,7 @@ $testbed = Proc.new do
   {
     "name" => "testbed-test",
     "version" => 3,
-    "esx" => (0..0).map do | idx |
+    "esx" => (0..2).map do | idx |
       {
         "name" => "esx.#{idx}",
         "vc" => "vc.0",
@@ -12,10 +12,10 @@ $testbed = Proc.new do
         "dc" => "vcqaDC",
         "clusterName" => "cluster0",
         "style" => "fullInstall",
-        "cpus" => 32, # 32 vCPUs
-        "memory" => 98000, # 98GB memory
+        "cpus" => 8, # 32 vCPUs
+        "memory" => 24000, # 98000 98GB memory
         "fullClone" => true,
-        "disks" => [ 2 * 1000 * oneGB ], # 2 TB Disk
+        "disks" => [ 50 * oneGB, 50 * oneGB, 600 * oneGB ], # [ 2 * 1000 * oneGB ] -->  2 TB Disk
         "guestOSlist" => [         
           {
             "vmName" => "centos-vm.#{idx}",
