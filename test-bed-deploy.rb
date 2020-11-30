@@ -38,6 +38,7 @@ $testbed = Proc.new do
             "dc" => "vcqaDC"
           }
         ]
+        "disks" => [ 600 * oneGB ]
       }
     ],
  
