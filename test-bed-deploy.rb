@@ -37,7 +37,7 @@ $testbed = Proc.new do
             "name" => "cluster0",
             "dc" => "vcqaDC"
           }
-        ]
+        ],
         "disks" => [ 600 * oneGB ]
       }
     ],
