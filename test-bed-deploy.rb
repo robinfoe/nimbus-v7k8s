@@ -15,7 +15,7 @@ $testbed = Proc.new do
         "cpus" => 8, # 32 vCPUs
         "memory" => 24000, # 98000 98GB memory
         "fullClone" => true,
-        "desiredPassword" => "Dr0wssap!"
+        "desiredPassword" => "Dr0wssap!",
         "disks" => [ 50 * oneGB, 50 * oneGB, 600 * oneGB ], # [ 2 * 1000 * oneGB ] -->  2 TB Disk
         "guestOSlist" => [         
           {
