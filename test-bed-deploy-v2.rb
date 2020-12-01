@@ -15,13 +15,9 @@ $testbed = Proc.new do
         "cpus" => 8, # 32 vCPUs
         "memory" => 24000, # 98000 98GB memory
         "fullClone" => true,
-        "disks" => [ 50 * oneGB, 50 * oneGB, 600 * oneGB ], # [ 2 * 1000 * oneGB ] -->  2 TB Disk
-        "guestOSlist" => [         
-          {
-            "vmName" => "centos-vm.#{idx}",
-            "ovfuri" => NimbusUtils.get_absolute_ovf("CentOS-7-64-VMTools/CentOS-7-x64.ovf")
-          }
-        ]
+        "desiredPassword" => "ca$hc0w",
+        "disks" => [ 200 * oneGB ], # [ 2 * 1000 * oneGB ] -->  2 TB Disk
+        "ssd" => [ 50 * oneGB, 600 * oneGB ] # [ 2 * 1000 * oneGB ] -->  2 TB Disk
       }
     end,
  
