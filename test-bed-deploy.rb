@@ -4,7 +4,7 @@ $testbed = Proc.new do
   {
     "name" => "testbed-test",
     "version" => 3,
-    "esx" => (0..0).map do | idx |
+    "esx" => (0..2).map do | idx |
       {
         "name" => "esx.#{idx}",
         "vc" => "vc.0",
@@ -15,7 +15,7 @@ $testbed = Proc.new do
         "cpus" => 8, # 32 vCPUs
         "memory" => 24000, # 98000 98GB memory
         "fullClone" => true,
-        "desiredPassword" => "Dr0wssap!",
+        "desiredPassword" => "ca$hc0w",
         "disks" => [ 50 * oneGB, 50 * oneGB, 600 * oneGB ], # [ 2 * 1000 * oneGB ] -->  2 TB Disk
         "guestOSlist" => [         
           {
@@ -26,7 +26,23 @@ $testbed = Proc.new do
       }
     end,
  
-    
+    "vcs" => [
+      {
+        "name" => "vc.0",
+        "type" => "vcva",
+        "customBuild" => "ob-17004997",
+        "dcName" => ["vcqaDC"],
+        "enableDrs" => true,
+        "clusters" => [
+          {
+            "name" => "cluster0",
+            "dc" => "vcqaDC"
+          }
+        ],
+        "disks" => [ 600 * oneGB ]
+      }
+    ],
+ 
     "beforePostBoot" => Proc.new do |runId, testbedSpec, vmList, catApi, logDir|
     end,
     "postBoot" => Proc.new do |runId, testbedSpec, vmList, catApi, logDir|
