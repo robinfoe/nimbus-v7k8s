@@ -16,7 +16,7 @@ $testbed = Proc.new do
         "memory" => 24000, # 98000 98GB memory
         "fullClone" => true,
         "desiredPassword" => "ca$hc0w",
-        "disks" => [ 50 * oneGB, 50 * oneGB, 600 * oneGB ], # [ 2 * 1000 * oneGB ] -->  2 TB Disk
+        "ssd" => [ 50 * oneGB, 50 * oneGB, 600 * oneGB ], # [ 2 * 1000 * oneGB ] -->  2 TB Disk
         "guestOSlist" => [         
           {
             "vmName" => "centos-vm.#{idx}",
