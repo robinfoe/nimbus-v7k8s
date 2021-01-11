@@ -12,6 +12,12 @@ $testbed = Proc.new do
         },
     ],
 
+
+    'network' => [
+            { 'name' => 'datacenter.0', 'routable' => true },
+            # { 'name' => 'remote.1', 'routable' => true },
+        ],
+
     "esx" => (0..2).map do | idx |
       {
         "name" => "esx.#{idx}",
@@ -23,7 +29,8 @@ $testbed = Proc.new do
         "cpus" => 16, # 32 vCPUs
         "memory" => 32000, # 98000 98GB memory
         "fullClone" => true,
-        "nics" => 2,
+        "nics" => 3,
+        "networks" => ["public" , "nsx::datacenter.0"]
         "desiredPassword" => "ca$hc0w",
         # "disk" => [ 200 * oneGB ], # [ 2 * 1000 * oneGB ] -->  2 TB Disk
         # "ssd" => [ 50 * oneGB, 600 * oneGB ] # [ 2 * 1000 * oneGB ] -->  2 TB Disk
@@ -42,6 +49,8 @@ $testbed = Proc.new do
         "type" => "vcva",
         "customBuild" => "ob-17004997",
         "dcName" => ["dc-apj"],
+        "nics" => 2
+        "networks" => ["public" , "nsx::datacenter.0"]
         "enableDrs" => true,
         "clusters" => [
           {

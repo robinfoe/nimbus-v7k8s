@@ -61,13 +61,15 @@ $testbed = proc do
         
         'network' => [
             { 'name' => 'datacenter.0', 'routable' => true },
-            { 'name' => 'remote.1', 'routable' => true },
+            # { 'name' => 'remote.1', 'routable' => true },
         ],
 
         'vcs' => [
             attach_to_network({
                 'name' => 'vc',
                 'type' => 'vcva',
+                'nics' => 2,
+                'networks' => ['public']
                 'additionalScript' => [],
                 'dbType' => 'embedded',
                 'dcName' => [
@@ -78,8 +80,9 @@ $testbed = proc do
                 #'remote-site-4',
                 ],
                 'clusters' => [
-                cluster({ 'name' => 'cluster', 'dc' => 'datacenter'}),
-                cluster({ 'name' => 'cluster', 'dc' => 'remote-site-1'}),
+                    cluster({ 'name' => 'cluster', 'dc' => 'datacenter'}),
+
+                # cluster({ 'name' => 'cluster', 'dc' => 'remote-site-1'}),
                 #{ 'name' => 'cluster', 'dc' => 'remote-site-2', 'vsan' => true },
                 #{ 'name' => 'cluster', 'dc' => 'remote-site-3', 'vsan' => true },
                 #{ 'name' => 'cluster', 'dc' => 'remote-site-4', 'vsan' => true },
@@ -93,9 +96,16 @@ $testbed = proc do
             # attach_to_network(largedisk(esx('vc', 'datacenter', 'cluster', 2)), 'nsx::datacenter.0'),
             # attach_to_network(largedisk(esx('vc', 'datacenter', 'cluster', 3)), 'nsx::datacenter.0'),
             # attach_to_network(largedisk(esx('vc', 'datacenter', 'cluster', 4)), 'nsx::datacenter.0'),
-            attach_to_network(esx('vc', 'remote-site-1', 'cluster', 1), 'nsx::remote.1'),
-            attach_to_network(esx('vc', 'remote-site-1', 'cluster', 2), 'nsx::remote.1'),
-            attach_to_network(esx('vc', 'remote-site-1', 'cluster', 3), 'nsx::remote.1'),
+
+            attach_to_network(esx('vc', 'datacenter', 'cluster', 1), 'nsx::datacenter.0'),
+            attach_to_network(esx('vc', 'datacenter', 'cluster', 2), 'nsx::datacenter.0'),
+            attach_to_network(esx('vc', 'datacenter', 'cluster', 3), 'nsx::datacenter.0'),
+            
+
+            # attach_to_network(esx('vc', 'remote-site-1', 'cluster', 1), 'nsx::remote.1'),
+            # attach_to_network(esx('vc', 'remote-site-1', 'cluster', 2), 'nsx::remote.1'),
+            # attach_to_network(esx('vc', 'remote-site-1', 'cluster', 3), 'nsx::remote.1'),
+            
             #esx('vc', 'remote-site-2', 'cluster', 1),
             #esx('vc', 'remote-site-2', 'cluster', 2),
             #esx('vc', 'remote-site-3', 'cluster', 1),
