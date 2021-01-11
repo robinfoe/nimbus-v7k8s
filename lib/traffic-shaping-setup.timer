@@ -1,0 +1,11 @@
+[Unit]
+Description=Set up traffic shaping
+Wants=network-online.target
+After=network-online.target
+
+[Timer]
+OnBootSec=30
+OnUnitActiveSec=60
+
+[Install]
+WantedBy=timers.target

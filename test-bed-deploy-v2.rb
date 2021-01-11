@@ -23,10 +23,16 @@ $testbed = Proc.new do
         "cpus" => 16, # 32 vCPUs
         "memory" => 32000, # 98000 98GB memory
         "fullClone" => true,
-        "nic" => 2,
+        "nics" => 2,
         "desiredPassword" => "ca$hc0w",
-        "disks" => [ 200 * oneGB ], # [ 2 * 1000 * oneGB ] -->  2 TB Disk
-        "ssd" => [ 50 * oneGB, 600 * oneGB ] # [ 2 * 1000 * oneGB ] -->  2 TB Disk
+        # "disk" => [ 200 * oneGB ], # [ 2 * 1000 * oneGB ] -->  2 TB Disk
+        # "ssd" => [ 50 * oneGB, 600 * oneGB ] # [ 2 * 1000 * oneGB ] -->  2 TB Disk
+
+        "disk" => [ 50 * oneGB, 50 * oneGB, 600 * oneGB ], # [ 2 * 1000 * oneGB ] -->  2 TB Disk
+        "ssd" => [  50 * oneGB ], # [ 2 * 1000 * oneGB ] -->  2 TB Disk
+        "freeLocalLuns" => 2
+
+
       }
     end,
  
@@ -41,6 +47,9 @@ $testbed = Proc.new do
           {
             "name" => "cluster-k8s",
             "dc" => "dc-apj"
+            "vsan" => true, 
+            "enableDrs" => true,
+            "enableHA" => true 
           }
         ],
         "disks" => [ 600 * oneGB ]

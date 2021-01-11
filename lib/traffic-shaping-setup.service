@@ -1,0 +1,12 @@
+[Unit]
+Description=Set up traffic shaping
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/traffic-shaping-setup.sh
+EnvironmentFile=/etc/sysconfig/traffic-shaping-setup
+
+[Install]
+WantedBy=multi-user.target
