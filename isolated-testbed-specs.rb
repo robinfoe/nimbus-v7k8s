@@ -1,5 +1,6 @@
 require_relative './lib/ifconf.rb'
 
+# Work in progress.. please use to test-bed-deploy-v2.rb
 
 GB = 1 * 1024 * 1024 # in KB
 
@@ -59,9 +60,15 @@ $testbed = proc do
         'version' => 4,
         'name' => 'rfoe-multinet-testbed',
         
+
+        # force_public -> bind to nimbus public network
+    # public -> bind to isolated_network vxlan  192.168.111.0/24 GW 192.168.111.1 DNS 192.168.111.1
+    # net.0 -> bind to isolated_network vxlan  192.168.112.0/24 GW 192.168.112.1 DNS 192.168.112.1
+    # net.1 -> bind to isolated_network vxlan  192.168.113.0/24 GW 192.168.113.1 DNS 192.168.113.1
+
         'network' => [
-            { 'name' => 'datacenter.0', 'routable' => true },
-            # { 'name' => 'remote.1', 'routable' => true },
+            { 'name' => 'net.0', 'routable' => true },
+            { 'name' => 'net.1', 'routable' => true },
         ],
 
         'vcs' => [
@@ -69,15 +76,15 @@ $testbed = proc do
                 'name' => 'vc',
                 'type' => 'vcva',
                 'nics' => 2,
-                'networks' => ['public']
+                'networks' => ['force_public']
                 'additionalScript' => [],
                 'dbType' => 'embedded',
                 'dcName' => [
-                'datacenter',
-                'remote-site-1',
-                #'remote-site-2',
-                #'remote-site-3',
-                #'remote-site-4',
+                    'datacenter',
+                    'remote-site-1',
+                    #'remote-site-2',
+                    #'remote-site-3',
+                    #'remote-site-4',
                 ],
                 'clusters' => [
                     cluster({ 'name' => 'cluster', 'dc' => 'datacenter'}),
@@ -87,31 +94,15 @@ $testbed = proc do
                 #{ 'name' => 'cluster', 'dc' => 'remote-site-3', 'vsan' => true },
                 #{ 'name' => 'cluster', 'dc' => 'remote-site-4', 'vsan' => true },
                 ],
-            }, 'nsx::datacenter.0')
+            }, 'public')
         ],
 
         'esx' => [
             # Datacenter gets 3 hosts for minimum vSan quorum.
-            # attach_to_network(largedisk(esx('vc', 'datacenter', 'cluster', 1)), 'nsx::datacenter.0'),
-            # attach_to_network(largedisk(esx('vc', 'datacenter', 'cluster', 2)), 'nsx::datacenter.0'),
-            # attach_to_network(largedisk(esx('vc', 'datacenter', 'cluster', 3)), 'nsx::datacenter.0'),
-            # attach_to_network(largedisk(esx('vc', 'datacenter', 'cluster', 4)), 'nsx::datacenter.0'),
-
+           
             attach_to_network(esx('vc', 'datacenter', 'cluster', 1), 'nsx::datacenter.0'),
             attach_to_network(esx('vc', 'datacenter', 'cluster', 2), 'nsx::datacenter.0'),
             attach_to_network(esx('vc', 'datacenter', 'cluster', 3), 'nsx::datacenter.0'),
-            
-
-            # attach_to_network(esx('vc', 'remote-site-1', 'cluster', 1), 'nsx::remote.1'),
-            # attach_to_network(esx('vc', 'remote-site-1', 'cluster', 2), 'nsx::remote.1'),
-            # attach_to_network(esx('vc', 'remote-site-1', 'cluster', 3), 'nsx::remote.1'),
-            
-            #esx('vc', 'remote-site-2', 'cluster', 1),
-            #esx('vc', 'remote-site-2', 'cluster', 2),
-            #esx('vc', 'remote-site-3', 'cluster', 1),
-            #esx('vc', 'remote-site-3', 'cluster', 2),
-            #esx('vc', 'remote-site-4', 'cluster', 1),
-            #esx('vc', 'remote-site-4', 'cluster', 2),
         ],
 
         'vsan' => true,
